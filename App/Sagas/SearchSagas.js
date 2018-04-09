@@ -11,22 +11,24 @@
 *************************************************************/
 
 import { call, put } from 'redux-saga/effects'
-import SearchActions from '../Redux/SearchRedux'
+import { NavigationActions } from 'react-navigation'
+import SearchActions from '../Redux/SearchFormRedux'
 // import { SearchSelectors } from '../Redux/SearchRedux'
 
 export function * getSearch (api, action) {
-  const { data } = action
   // get current data from Store
   // const currentData = yield select(SearchSelectors.getData)
   // make the call to the api
-  const response = yield call(api.getsearch, data)
+  const response = yield call(api.searchImages, action.data)
 
   // success?
   if (response.ok) {
+    const photos = response.data.photos.photo.filter(item => item.url_o).map(item => item.url_o)
     // You might need to change the response here - do this with a 'transform',
     // located in ../Transforms/. Otherwise, just pass the data back from the api.
-    yield put(SearchActions.searchSuccess(response.data))
+    yield put(SearchActions.searchFormSuccess({photos: photos}))
+    yield put(NavigationActions.navigate({routeName: 'SearchResultScreen'}))
   } else {
-    yield put(SearchActions.searchFailure())
+    yield put(SearchActions.searchFormFailure())
   }
 }

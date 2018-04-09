@@ -5,7 +5,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   searchFormRequest: ['data'],
-  searchFormSuccess: ['payload'],
+  searchFormSuccess: ['photos'],
   searchFormFailure: null
 })
 
@@ -17,7 +17,7 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   data: null,
   fetching: null,
-  payload: null,
+  photos: null,
   error: null
 })
 
@@ -35,13 +35,13 @@ export const request = (state, { data }) =>
 
 // successful api lookup
 export const success = (state, action) => {
-  const { payload } = action
-  return state.merge({ fetching: false, error: null, payload })
+  const { photos } = action
+  return state.merge({ fetching: false, error: null, photos: photos })
 }
 
 // Something went wrong somewhere.
 export const failure = state =>
-  state.merge({ fetching: false, error: true, payload: null })
+  state.merge({ fetching: false, error: true, photos: null })
 
 /* ------------- Hookup Reducers To Types ------------- */
 

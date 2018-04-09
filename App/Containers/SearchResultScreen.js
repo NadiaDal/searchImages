@@ -1,22 +1,43 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, Image } from 'react-native'
+import { ScrollView, Text, Image, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
+import { Metrics } from '../Themes/'
 
 // Styles
 import styles from './Styles/SearchResultScrenStyle'
 
-class SearchResultScren extends Component {
+class SearchResultScreen extends Component {
   // constructor (props) {
   //   super(props)
   //   this.state = {}
   // }
+  renderPhoto = (uri) => {
+    console.log('uri', uri)
+       return (
+         <Image
+          style={{
+            width: Metrics.screenWidth / 3,
+            height: Metrics.screenWidth / 3
+          }}
+          source={{uri: uri}}
+        />
+      )
+  }
+
   renderImages = () => {
-    const {images} = this.props
-    images.map(uri => (
-      <Image source={{uri: uri}}/>
-    ))
+    const {photos} = this.props
+    return (
+      <FlatList
+        contentContainerStyle={{paddingTop: 20, paddingBottom: 30}}
+        keyExtractor={(item, index) => index}
+        data={photos.photos}
+        numColumns={3}
+        horizontal={false}
+        renderItem={({item}) => this.renderPhoto(item)}
+      />
+    )
   }
 
   render () {
@@ -31,7 +52,7 @@ class SearchResultScren extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    images: state.search.data
+    photos: state.search.photos
   }
 }
 
@@ -40,4 +61,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchResultScren)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchResultScreen)

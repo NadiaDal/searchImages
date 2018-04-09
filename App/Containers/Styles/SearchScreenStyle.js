@@ -5,6 +5,9 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     marginTop: Metrics.navBarHeight,
-    backgroundColor: Colors.background
+    backgroundColor: Colors.silver
+  },
+  button: {
+    backgroundColor: Colors.silver
   }
 })
