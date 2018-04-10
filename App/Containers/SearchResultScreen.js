@@ -26,13 +26,13 @@ class SearchResultScreen extends Component {
   }
 
   renderPhoto = (uri) => {
-    console.log('uri', uri)
+    const {columns} = this.props
     return (
       <View
         style={{
           backgroundColor: this.getRandomColor(),
-          width: Metrics.screenWidth / 3,
-          height: Metrics.screenWidth / 3
+          width: Metrics.screenWidth / columns,
+          height: Metrics.screenWidth / columns
         }}>
         <Image
           style={{
@@ -66,8 +66,8 @@ class SearchResultScreen extends Component {
       <FlatList
         contentContainerStyle={{paddingTop: 20, paddingBottom: 30}}
         keyExtractor={(item, index) => index}
-        data={photos.photos}
-        numColumns={3}
+        data={photos}
+        numColumns={this.props.columns}
         horizontal={false}
         renderItem={({item}) => this.renderPhoto(item)}
       />
@@ -86,7 +86,8 @@ class SearchResultScreen extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    photos: state.search.photos
+    photos: state.search.photos,
+    columns: state.search.columns
   }
 }
 
