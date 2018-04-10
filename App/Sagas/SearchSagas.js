@@ -23,7 +23,7 @@ export function * getSearch (api, action) {
 
   // success?
   if (response.ok) {
-    const photos = response.data.photos.photo.filter(item => item.url_o).map(item => item.url_o)
+    const photos = response.data.photos.photo.filter(item => item.url_s).map(item => item.url_s)
     // You might need to change the response here - do this with a 'transform',
     // located in ../Transforms/. Otherwise, just pass the data back from the api.
     yield put(SearchActions.searchFormSuccess({photos: photos}))

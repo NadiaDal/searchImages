@@ -8,7 +8,7 @@ import {throttle} from '../Utils/index'
 import styles from './Styles/SearchScreenStyle'
 
 class Search extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = { text: 'Useless Placeholder' }
   }
@@ -25,7 +25,7 @@ class Search extends Component {
           />
         </View>
         <TouchableOpacity
-          style={styles.button}
+          style={styles.searchButton}
           onPress={() => this.props.search(this.state.text)}
         >
           <View>

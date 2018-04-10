@@ -7,7 +7,15 @@ export default StyleSheet.create({
     marginTop: Metrics.navBarHeight,
     backgroundColor: Colors.silver
   },
-  button: {
-    backgroundColor: Colors.silver
+  searchButton: {
+    backgroundColor: Colors.fire,
+    width: 150,
+    height: 45,
+    marginTop: 20,
+    padding: 10,
+    borderRadius: 8,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
