@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { Colors, Metrics } from '../../Themes/'
+import colors from '../../Themes/Colors'
 
 export default StyleSheet.create({
   container: {
@@ -14,7 +15,9 @@ export default StyleSheet.create({
     width: Metrics.screenWidth * 0.7,
     borderRadius: 8,
     backgroundColor: Colors.text,
-    marginBottom: 35
+    marginBottom: 35,
+    color: Colors.facebook,
+    paddingLeft: 25
   },
   searchButton: {
     backgroundColor: Colors.fire,
@@ -32,8 +35,7 @@ export default StyleSheet.create({
     color: Colors.eggplant
   },
   multiSliderContainer: {
-    height: 40,
-    width: Metrics.screenWidth * 0.7
+    height: 40
   },
   selectedStyle: {
     height: 5,
