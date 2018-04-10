@@ -14,6 +14,18 @@ class Search extends Component {
     this.state = { text: 'cats', columns: [2] }
   }
 
+  renderSearchInput = () => {
+    return (
+      <View>
+        <TextInput
+          style={styles.searchInput}
+          onChangeText={(text) => this.setState({text})}
+          value={this.state.text}
+        />
+      </View>
+    )
+  }
+
   customMarket = () => {
     return (
       <View style={styles.customMarker}>
@@ -22,35 +34,30 @@ class Search extends Component {
     )
   }
 
-  render () {
+  renderSlider = () => {
     return (
-      <ScrollView style={styles.container}>
-        <Text>Search Container</Text>
-        <View>
-          <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-            onChangeText={(text) => this.setState({text})}
-            value={this.state.text}
-          />
-        </View>
-        <View>
-          <Text style={styles.sliderValue}>
-            {this.state.columns}
-          </Text>
-          <MultiSlider
-            values={this.state.columns}
-            min={1}
-            max={5}
-            step={1}
-            sliderLength={280}
-            onValuesChange={(data) => this.setState({ columns: data })}
-            selectedStyle={styles.selectedStyle}
-            markerStyle={styles.markerStyle}
-            containerStyle={styles.multiSliderContainer}
-            unselectedStyle={styles.unselectedStyle}
-            customMarker={this.customMarket}
-          />
-        </View>
+      <MultiSlider
+        values={this.state.columns}
+        min={1}
+        max={5}
+        step={1}
+        sliderLength={280}
+        onValuesChange={(data) => this.setState({columns: data})}
+        selectedStyle={styles.selectedStyle}
+        markerStyle={styles.markerStyle}
+        containerStyle={styles.multiSliderContainer}
+        unselectedStyle={styles.unselectedStyle}
+        customMarker={this.customMarket}
+      />
+    )
+  }
+
+  renderSubmitButton = () => {
+    return (
+      <View>
+        <Text style={styles.sliderValue}>
+          {this.state.columns}
+        </Text>
         <TouchableOpacity
           style={styles.searchButton}
           onPress={() => this.props.search({text: this.state.text, extras: 'url_s', columns: this.state.columns})}
@@ -61,7 +68,17 @@ class Search extends Component {
             </Text>
           </View>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
+    )
+  }
+
+  render () {
+    return (
+      <View style={styles.container}>
+        {this.renderSearchInput()}
+        {this.renderSlider()}
+        {this.renderSubmitButton()}
+      </View>
     )
   }
 }

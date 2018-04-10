@@ -4,8 +4,17 @@ import { Colors, Metrics } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Metrics.navBarHeight,
-    backgroundColor: Colors.silver
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.facebook,
+    padding: 10
+  },
+  searchInput: {
+    height: 40,
+    width: Metrics.screenWidth * 0.7,
+    borderRadius: 8,
+    backgroundColor: Colors.text,
+    marginBottom: 35
   },
   searchButton: {
     backgroundColor: Colors.fire,
@@ -14,6 +23,7 @@ export default StyleSheet.create({
     marginTop: 20,
     padding: 10,
     borderRadius: 8,
+    color: Colors.text,
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center'
@@ -22,29 +32,23 @@ export default StyleSheet.create({
     color: Colors.eggplant
   },
   multiSliderContainer: {
-    height: 20,
-    width: Metrics.screenWidth * 0.8,
-    alignSelf: 'center'
-  },
-  sliderContainer: {
-    height: 30,
-    alignItems: 'center',
-    justifyContent: 'center'
+    height: 40,
+    width: Metrics.screenWidth * 0.7
   },
   selectedStyle: {
     height: 5,
-    backgroundColor: Colors.facebook
+    backgroundColor: Colors.fire
   },
   unselectedStyle: {
     height: 5,
-    backgroundColor: Colors.charcoal
+    backgroundColor: Colors.text
   },
   customMarker: {
     backgroundColor: Colors.text,
     width: 25,
     height: 25,
     borderWidth: 0,
-    borderRadius: 15 / 2,
+    borderRadius: 8,
     shadowColor: Colors.black,
     shadowOffset: {width: 1, height: 1},
     zIndex: 50,
