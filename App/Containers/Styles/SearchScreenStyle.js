@@ -19,6 +19,11 @@ export default StyleSheet.create({
     color: Colors.facebook,
     paddingLeft: 25
   },
+  label: {
+    color: Colors.text,
+    alignSelf: 'center',
+    marginBottom: 15
+  },
   searchButton: {
     backgroundColor: Colors.fire,
     width: 150,
@@ -26,13 +31,9 @@ export default StyleSheet.create({
     marginTop: 20,
     padding: 10,
     borderRadius: 8,
-    color: Colors.text,
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  sliderValue: {
-    color: Colors.eggplant
   },
   multiSliderContainer: {
     height: 40

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, Text, TextInput, View } from 'react-native'
+import { TouchableOpacity, Text, TextInput, View, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import SearchActions from '../Redux/SearchFormRedux'
+import {Keyboard} from 'react-native'
 // import {throttle} from '../Utils/index'
 import MultiSlider from '../Components/react-native-multi-slider/MultiSlider'
 
@@ -15,18 +16,42 @@ class Search extends Component {
     this.state = { text: '', columns: [2] }
   }
 
+  handleSearch = () => {
+    const {text, columns} = this.state
+    const searchQuery =  {
+      text: text.length > 0 ? text : 'cats',
+      extras: 'url_s',
+      columns
+    }
+    Keyboard.dismiss()
+    this.setSearchInput('')
+    this.props.search(searchQuery)
+  }
+
+  setSearchInput = (text) => {
+    this.setState({text})
+  }
+
   renderSearchInput = () => {
     return (
-      <View>
-        <Text style={{color: Colors.text, alignSelf: 'center', marginBottom: 15}}>Search term: </Text>
-        <TextInput
-          placeholder={'Search ...'}
-          style={styles.searchInput}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
-          underlineColorAndroid={'transparent'}
-          placeholderTextColor={Colors.facebook}
-        />
+      <View style={{height: 40, marginBottom: 45}}>
+        <Text style={styles.label}>Search term: </Text>
+        {this.props.fetching ? (
+          <ActivityIndicator
+            size={'large'}
+            color={Colors.text}
+          />) : (
+          <TextInput
+            placeholder={'Search text...'}
+            style={styles.searchInput}
+            onChangeText={this.setSearchInput}
+            value={this.state.text}
+            underlineColorAndroid={'transparent'}
+            placeholderTextColor={Colors.facebook}
+            onSubmitEditing={this.handleSearch}
+          />)
+        }
+
       </View>
     )
   }
@@ -40,44 +65,39 @@ class Search extends Component {
   }
 
   renderSlider = () => {
+    const { columns } = this.state
     return (
-      <MultiSlider
-        values={this.state.columns}
-        min={1}
-        max={5}
-        step={1}
-        sliderLength={Metrics.screenWidth * 0.7}
-        onValuesChange={(data) => this.setState({columns: data})}
-        selectedStyle={styles.selectedStyle}
-        markerStyle={styles.markerStyle}
-        containerStyle={styles.multiSliderContainer}
-        unselectedStyle={styles.unselectedStyle}
-        customMarker={this.customMarket}
-      />
+      <View>
+        <Text style={styles.label}>
+          Columns: {columns[0]}
+        </Text>
+        <MultiSlider
+          values={columns}
+          min={1}
+          max={5}
+          step={1}
+          sliderLength={Metrics.screenWidth * 0.7}
+          onValuesChange={(data) => this.setState({columns: data})}
+          selectedStyle={styles.selectedStyle}
+          markerStyle={styles.markerStyle}
+          containerStyle={styles.multiSliderContainer}
+          unselectedStyle={styles.unselectedStyle}
+          customMarker={this.customMarket}
+        />
+      </View>
     )
   }
 
   renderSubmitButton = () => {
     return (
       <View>
-        <Text style={styles.sliderValue}>
-          {this.state.columns}
-        </Text>
         <TouchableOpacity
           style={styles.searchButton}
-          onPress={() => this.props.search(
-            {
-              text: this.state.text,
-              extras: 'url_s',
-              columns: this.state.columns
-            })
-          }
+          onPress={this.handleSearch}
         >
-          <View>
             <Text style={{color: 'white'}}>
               Search
             </Text>
-          </View>
         </TouchableOpacity>
       </View>
     )
@@ -96,6 +116,7 @@ class Search extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    fetching: state.search.fetching
   }
 }
 
