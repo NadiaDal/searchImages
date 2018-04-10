@@ -37,7 +37,7 @@ const create = (baseURL = 'https://api.github.com/') => {
   const getRoot = () => api.get('')
   const getRate = () => api.get('rate_limit')
   const getUser = (username) => api.get('search/users', {q: username})
-  const searchImages = () => api.get('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=72b5b9fe6862c3ddc6246c56caf7184c&format=json&nojsoncallback=1&text=cats&extras=url_s&per_page=30&page=1')
+  const searchImages = (query) => api.get('https://api.flickr.com/services/rest/?method=flickr.photos.search', query)
 
   // ------
   // STEP 3

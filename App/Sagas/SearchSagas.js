@@ -19,14 +19,23 @@ export function * getSearch (api, action) {
   // get current data from Store
   // const currentData = yield select(SearchSelectors.getData)
   // make the call to the api
-  const response = yield call(api.searchImages, action.data)
+  const query = {
+    api_key: '72b5b9fe6862c3ddc6246c56caf7184c',
+    format: 'json',
+    nojsoncallback: 1,
+    text: action.data.text,
+    extras: action.data.extras,
+    per_page: 30,
+    page: 1
+  }
+  const response = yield call(api.searchImages, query)
 
   // success?
   if (response.ok) {
     const photos = response.data.photos.photo.filter(item => item.url_s).map(item => item.url_s)
     // You might need to change the response here - do this with a 'transform',
     // located in ../Transforms/. Otherwise, just pass the data back from the api.
-    yield put(SearchActions.searchFormSuccess({photos: photos}))
+    yield put(SearchActions.searchFormSuccess(photos, action.data.columns[0]))
     yield put(NavigationActions.navigate({routeName: 'SearchResultScreen'}))
   } else {
     yield put(SearchActions.searchFormFailure())
