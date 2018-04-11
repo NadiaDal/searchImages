@@ -1,10 +1,9 @@
 import { AsyncStorage } from 'react-native'
 
-export async function setPhotos (potos, searchQuery) {
+export async function setPhotos (photos, searchQuery) {
   try {
-    const data = JSON.stringify(potos)
-    await AsyncStorage.setItem('Photos', data)
-    await AsyncStorage.setItem('SearchQuery', searchQuery)
+    await AsyncStorage.setItem('Photos', JSON.stringify(photos))
+    await AsyncStorage.setItem('SearchQuery',  JSON.stringify(searchQuery))
   } catch (error) {
     throw new Error(error)
   }
