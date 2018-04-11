@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, Text, TextInput, View, ActivityIndicator } from 'react-native'
+import { TouchableOpacity, Text, TextInput, View, ActivityIndicator, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import SearchActions from '../Redux/SearchFormRedux'
-import {Keyboard} from 'react-native'
 // import {throttle} from '../Utils/index'
 import MultiSlider from '../Components/react-native-multi-slider/MultiSlider'
 
@@ -13,12 +12,20 @@ import { Colors, Metrics } from '../Themes'
 class Search extends Component {
   constructor (props) {
     super(props)
-    this.state = { text: 'Cats', columns: [2] }
+    this.state = {
+      text: '',
+      columns: [2],
+      validationMessage: false
+    }
   }
 
   handleSearch = () => {
+    if (this.state.text.length === 0) {
+      this.setState({validationMessage: true})
+      return
+    }
     const {text, columns} = this.state
-    const searchQuery =  {
+    const searchQuery = {
       text: text.length > 0 ? text : 'cats',
       extras: 'url_s',
       columns: columns[0]
@@ -30,27 +37,39 @@ class Search extends Component {
 
   setSearchInput = (text) => {
     this.setState({text})
+    this.setState({validationMessage: false})
+  }
+
+  renderLoader = () => {
+    return (
+      <ActivityIndicator
+        size={'large'}
+        color={Colors.text}
+      />
+    )
+  }
+
+  renderInput = () => {
+    return (
+      <View>
+        <TextInput
+          placeholder={'Search text...'}
+          style={styles.searchInput}
+          onChangeText={this.setSearchInput}
+          value={this.state.text}
+          underlineColorAndroid={'transparent'}
+          placeholderTextColor={Colors.facebook}
+          onSubmitEditing={this.handleSearch}
+        />
+        {this.state.validationMessage && <Text style={styles.validation}>Please enter search text!</Text>}
+      </View>)
   }
 
   renderSearchInput = () => {
     return (
       <View style={styles.searchInputWrapper}>
         <Text style={styles.label}>Search term: </Text>
-        {this.props.fetching ? (
-          <ActivityIndicator
-            size={'large'}
-            color={Colors.text}
-          />) : (
-          <TextInput
-            placeholder={'Search text...'}
-            style={styles.searchInput}
-            onChangeText={this.setSearchInput}
-            value={this.state.text}
-            underlineColorAndroid={'transparent'}
-            placeholderTextColor={Colors.facebook}
-            onSubmitEditing={this.handleSearch}
-          />)
-        }
+        {this.props.fetching ? this.renderLoader() : this.renderInput()}
 
       </View>
     )

@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native'
 export async function setPhotos (photos, searchQuery) {
   try {
     await AsyncStorage.setItem('Photos', JSON.stringify(photos))
-    await AsyncStorage.setItem('SearchQuery',  JSON.stringify(searchQuery))
+    await AsyncStorage.setItem('SearchQuery', JSON.stringify(searchQuery))
   } catch (error) {
     throw new Error(error)
   }

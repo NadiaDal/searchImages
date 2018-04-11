@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native'
 import { Colors, Metrics } from '../../Themes/'
-import colors from '../../Themes/Colors'
 
 export default StyleSheet.create({
   container: {
@@ -12,7 +11,7 @@ export default StyleSheet.create({
   },
   searchInputWrapper: {
     height: 40,
-    marginBottom: 45
+    marginBottom: 60
   },
   searchInput: {
     height: 40,
@@ -24,6 +23,11 @@ export default StyleSheet.create({
   },
   label: {
     color: Colors.text,
+    alignSelf: 'center',
+    marginBottom: 15
+  },
+  validation: {
+    color: Colors.fire,
     alignSelf: 'center',
     marginBottom: 15
   },
