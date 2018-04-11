@@ -21,7 +21,7 @@ class Search extends Component {
     const searchQuery =  {
       text: text.length > 0 ? text : 'cats',
       extras: 'url_s',
-      columns
+      columns: columns[0]
     }
     Keyboard.dismiss()
     this.setSearchInput('')
@@ -34,7 +34,7 @@ class Search extends Component {
 
   renderSearchInput = () => {
     return (
-      <View style={{height: 40, marginBottom: 45}}>
+      <View style={styles.searchInputWrapper}>
         <Text style={styles.label}>Search term: </Text>
         {this.props.fetching ? (
           <ActivityIndicator

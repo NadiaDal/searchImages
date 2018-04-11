@@ -10,12 +10,15 @@ export default StyleSheet.create({
     backgroundColor: Colors.facebook,
     padding: 10
   },
+  searchInputWrapper: {
+    height: 40,
+    marginBottom: 45
+  },
   searchInput: {
     height: 40,
     width: Metrics.screenWidth * 0.7,
     borderRadius: 8,
     backgroundColor: Colors.text,
-    marginBottom: 35,
     color: Colors.facebook,
     paddingLeft: 25
   },
