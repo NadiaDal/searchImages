@@ -6,13 +6,11 @@ import DebugConfig from '../Config/DebugConfig'
 /* ------------- Types ------------- */
 
 import { StartupTypes } from '../Redux/StartupRedux'
-import { GithubTypes } from '../Redux/GithubRedux'
 import { SearchFormTypes } from '../Redux/SearchFormRedux'
 
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
-import { getUserAvatar } from './GithubSagas'
 import { getSearch } from './SearchSagas'
 
 /* ------------- API ------------- */
@@ -26,7 +24,6 @@ const api = DebugConfig.useFixtures ? FixtureAPI : API.create()
 export default function * root () {
   yield all([
     takeLatest(StartupTypes.STARTUP, startup),
-    takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api),
     takeLatest(SearchFormTypes.SEARCH_FORM_REQUEST, getSearch, api)
   ])
 }
