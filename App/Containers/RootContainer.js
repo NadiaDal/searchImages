@@ -22,8 +22,9 @@ class RootContainer extends Component {
   }
 
   handleAppStateChange = async (nextAppState) => {
+    const {photos, searchQuery} = this.props
     if (nextAppState === 'background') {
-      await DataStorage.setPhotos(this.props.photos)
+      await DataStorage.setPhotos(photos, searchQuery)
     }
     this.setState({appState: nextAppState})
   }
@@ -40,7 +41,8 @@ class RootContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    photos: state.search.photos
+    photos: state.search.photos,
+    searchQuery: state.search.searchQuery
 
   }
 }

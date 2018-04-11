@@ -1,17 +1,20 @@
-import { put, select } from 'redux-saga/effects'
+import { put, call, select } from 'redux-saga/effects'
 import GithubActions, { GithubSelectors } from '../Redux/GithubRedux'
 import { is } from 'ramda'
 import DataStorage from '../Services/DataStorage'
 import SearchActions from '../Redux/SearchFormRedux'
+import { NavigationActions } from 'react-navigation'
 
 // exported to make available for tests
 export const selectAvatar = GithubSelectors.selectAvatar
 
 // process STARTUP actions
 export function * startup (action) {
-  const photos = yield DataStorage.getPhotos()
+  const photos = yield call(DataStorage.getPhotos)
+  const searchQuery = yield call(DataStorage.getSearchQuery)
   if (photos) {
-    yield put(SearchActions.searchFormSuccess(photos, {}))
+    yield put(SearchActions.searchFormSuccess(photos, searchQuery))
+    yield put(NavigationActions.navigate({routeName: 'ResultScreen'}))
   }
   if (__DEV__ && console.tron) {
     // straight-up string logging
