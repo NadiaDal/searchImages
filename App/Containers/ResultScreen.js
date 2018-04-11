@@ -1,22 +1,14 @@
 import React, { Component } from 'react'
-import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import { Metrics, Colors } from '../Themes/'
-import Icon from 'react-native-vector-icons/Entypo'
-import SearchActions from '../Redux/SearchFormRedux'
-import styles from './Styles/ResultScrenStyle'
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
 import { NavigationActions } from 'react-navigation'
+import SearchActions from '../Redux/SearchFormRedux'
+import Icon from 'react-native-vector-icons/Entypo'
+
+import styles from './Styles/ResultScrenStyle'
+import { Metrics, Colors } from '../Themes/'
 
 class ResultScreen extends Component {
-  getRandomColor () {
-    var letters = '0123456789ABCDEF'
-    var color = '#'
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)]
-    }
-    return color
-  }
-
   loadNext = () => {
     const {searchQuery} = this.props
     const nextPage = {...searchQuery, page: searchQuery.page + 1}
@@ -25,13 +17,14 @@ class ResultScreen extends Component {
 
   renderPhoto = ({item}) => {
     const {columns} = this.props
+    const style = {
+      backgroundColor: Colors.facebook,
+      width: Metrics.screenWidth / columns,
+      height: Metrics.screenWidth / columns
+    }
     return (
       <View
-        style={{
-          backgroundColor: this.getRandomColor(),
-          width: Metrics.screenWidth / columns,
-          height: Metrics.screenWidth / columns
-        }}>
+        style={style}>
         <Image
           style={{
             width: Metrics.screenWidth / columns - 6,
@@ -73,11 +66,16 @@ class ResultScreen extends Component {
     )
   }
 
+  renderNoSearch = () => {
+    return (<Text style={styles.text}>There is no search result!</Text>)
+  }
+
   render () {
+    const { photos } = this.props
     return (
       <View style={styles.container}>
         {this.renderBackButton()}
-        {this.props.photos.length ? this.renderImages() : (<Text style={styles.text}>There is no search result!</Text>)}
+        {photos.length ? this.renderImages() : this.renderNoSearch()}
       </View>
     )
   }
