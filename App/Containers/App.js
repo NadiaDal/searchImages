@@ -6,8 +6,9 @@ import RootContainer from './RootContainer'
 import createStore from '../Redux'
 import { BackHandler, Platform } from 'react-native'
 import { NavigationActions } from 'react-navigation'
+import NetworkListener from '../Services/NetworkListener'
 
-// create our store
+// create our storeapi
 const store = createStore()
 
 /**
@@ -22,6 +23,7 @@ const store = createStore()
 
 class App extends Component {
   componentWillMount () {
+    NetworkListener.start()
     if (Platform.OS === 'ios') return
     BackHandler.addEventListener('hardwareBackPress', this.onAndroidBackButton)
   }

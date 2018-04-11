@@ -1,6 +1,8 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
 
+const consoleMonitor = (response) => console.log(response)
+
 // our "constructor"
 const create = (baseURL = 'https://api.github.com/') => {
   // ------
@@ -34,6 +36,10 @@ const create = (baseURL = 'https://api.github.com/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
+  if (__DEV__) {
+    api.addMonitor(consoleMonitor)
+  }
+
   const getRoot = () => api.get('')
   const getRate = () => api.get('rate_limit')
   const getUser = (username) => api.get('search/users', {q: username})
