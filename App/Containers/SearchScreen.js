@@ -13,7 +13,7 @@ import { Colors, Metrics } from '../Themes'
 class Search extends Component {
   constructor (props) {
     super(props)
-    this.state = { text: '', columns: [2] }
+    this.state = { text: 'Cats', columns: [2] }
   }
 
   handleSearch = () => {
@@ -95,9 +95,9 @@ class Search extends Component {
           style={styles.searchButton}
           onPress={this.handleSearch}
         >
-            <Text style={{color: 'white'}}>
-              Search
-            </Text>
+          <Text style={{color: 'white'}}>
+            Search
+          </Text>
         </TouchableOpacity>
       </View>
     )

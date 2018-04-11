@@ -4,7 +4,8 @@ import { Colors, Metrics } from '../../Themes/'
 const { screenWidth } = Metrics
 export default StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: Colors.facebook
   },
   photo: {
     width: screenWidth / 2,
@@ -15,6 +16,6 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   backButtonText: {
-    color: Colors.fire
+    color: Colors.text
   }
 })

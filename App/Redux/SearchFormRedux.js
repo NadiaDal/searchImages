@@ -16,7 +16,7 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   fetching: false,
-  photos: null,
+  photos: [],
   error: null,
   searchQuery: {}
 })
@@ -30,13 +30,13 @@ export const SearchFormSelectors = {
 /* ------------- Reducers ------------- */
 
 // request the data from an api
-export const request = (state, { data }) =>
-  state.merge({ fetching: true, data, payload: null })
+export const request = (state, action) =>
+  state.merge({ fetching: true })
 
 // successful api lookup
 export const success = (state, action) => {
   const { photos, searchQuery } = action
-  return state.merge({ fetching: false, error: null, photos: photos, searchQuery: searchQuery })
+  return state.merge({ fetching: false, error: null, photos: [...state.photos, ...photos], searchQuery: searchQuery })
 }
 
 // Something went wrong somewhere.

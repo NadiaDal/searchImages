@@ -1,22 +1,13 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
 import { Metrics, Colors } from '../Themes/'
 import Icon from 'react-native-vector-icons/Entypo'
 import SearchActions from '../Redux/SearchFormRedux'
-
-// Styles
 import styles from './Styles/ResultScrenStyle'
 import { NavigationActions } from 'react-navigation'
 
 class ResultScreen extends Component {
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {}
-  // }
-
   getRandomColor () {
     var letters = '0123456789ABCDEF'
     var color = '#'
@@ -26,7 +17,13 @@ class ResultScreen extends Component {
     return color
   }
 
-  renderPhoto = (uri) => {
+  loadNext = () => {
+    const {searchQuery} = this.props
+    const nextPage = {...searchQuery, page: searchQuery.page + 1}
+    this.props.search(nextPage)
+  }
+
+  renderPhoto = ({item}) => {
     const {columns} = this.props
     return (
       <View
@@ -37,10 +34,11 @@ class ResultScreen extends Component {
         }}>
         <Image
           style={{
-            width: '100%',
-            height: '100%'
+            width: Metrics.screenWidth / columns - 6,
+            height: Metrics.screenWidth / columns - 6,
+            margin: 3
           }}
-          source={{uri: uri}}
+          source={{uri: item}}
         />
       </View>
     )
@@ -62,31 +60,25 @@ class ResultScreen extends Component {
   }
 
   renderImages = () => {
-    const {photos, searchQuery} = this.props
-    const nextPage = {...searchQuery, page: searchQuery.page + 1}
+    const {photos, columns} = this.props
     return (
       <FlatList
-        contentContainerStyle={{paddingTop: 20, paddingBottom: 30}}
         keyExtractor={(item, index) => index}
         data={photos}
-        numColumns={this.props.columns}
+        numColumns={columns}
         horizontal={false}
-        renderItem={({item}) => this.renderPhoto(item)}
-        //onEndReachedThreshold={30}
-        onEndReached={(info) => {
-          console.log('=======onEndReached=======', info)
-          // this.props.search(nextPage)
-        }}
+        renderItem={this.renderPhoto}
+        onEndReached={this.loadNext}
       />
     )
   }
 
   render () {
     return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         {this.renderBackButton()}
         {this.renderImages()}
-      </ScrollView>
+      </View>
     )
   }
 }
