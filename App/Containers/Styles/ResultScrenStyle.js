@@ -17,5 +17,9 @@ export default StyleSheet.create({
   },
   backButtonText: {
     color: Colors.text
+  },
+  text: {
+    color: Colors.text,
+    alignSelf: 'center'
   }
 })

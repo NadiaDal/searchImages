@@ -77,7 +77,7 @@ class ResultScreen extends Component {
     return (
       <View style={styles.container}>
         {this.renderBackButton()}
-        {this.renderImages()}
+        {this.props.photos.length ? this.renderImages() : (<Text style={styles.text}>There is no search result!</Text>)}
       </View>
     )
   }
