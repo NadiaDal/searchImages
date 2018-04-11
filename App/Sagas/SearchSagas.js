@@ -9,13 +9,12 @@ export function * getSearch (api, {searchQuery}) {
     api_key: '72b5b9fe6862c3ddc6246c56caf7184c',
     format: 'json',
     nojsoncallback: 1,
-    per_page: 30,
     page: 1,
     ...searchQuery
   }
   const response = yield call(api.searchImages, query)
   if (response.ok) {
-    const photos = response.data.photos.photo.filter(item => item.url_s).map(item => item.url_s)
+    const photos = response.data.photos.photo.filter(item => item[searchQuery.extras]).map(item => item[searchQuery.extras])
     const nav = yield select(getNav)
     const currentRoute = nav.routes[nav.routes.length - 1]
     if (currentRoute.routeName !== 'ResultScreen') {
