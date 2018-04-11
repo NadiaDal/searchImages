@@ -1,12 +1,18 @@
 import { put, select } from 'redux-saga/effects'
 import GithubActions, { GithubSelectors } from '../Redux/GithubRedux'
 import { is } from 'ramda'
+import DataStorage from '../Services/DataStorage'
+import SearchActions from '../Redux/SearchFormRedux'
 
 // exported to make available for tests
 export const selectAvatar = GithubSelectors.selectAvatar
 
 // process STARTUP actions
 export function * startup (action) {
+  const photos = yield DataStorage.getPhotos()
+  if (photos) {
+    yield put(SearchActions.searchFormSuccess(photos, {}))
+  }
   if (__DEV__ && console.tron) {
     // straight-up string logging
     console.tron.log('Hello, I\'m an example of how to log via Reactotron.')
