@@ -6,6 +6,7 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   searchFormRequest: ['searchQuery'],
   searchFormSuccess: ['photos', 'searchQuery'],
+  searchFormSuccessAppend: ['photos'],
   searchFormFailure: null
 })
 
@@ -36,7 +37,12 @@ export const request = (state, action) =>
 // successful api lookup
 export const success = (state, action) => {
   const { photos, searchQuery } = action
-  return state.merge({ fetching: false, error: null, photos: [...state.photos, ...photos], searchQuery: searchQuery })
+  return state.merge({ fetching: false, error: null, photos: photos, searchQuery: searchQuery })
+}
+
+export const successAppend = (state, action) => {
+  const { photos } = action
+  return state.merge({fetching: false, error: null, photos: [...state.photos, ...photos]})
 }
 
 // Something went wrong somewhere.
@@ -48,5 +54,6 @@ export const failure = state =>
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SEARCH_FORM_REQUEST]: request,
   [Types.SEARCH_FORM_SUCCESS]: success,
+  [Types.SEARCH_FORM_SUCCESS_APPEND]: successAppend,
   [Types.SEARCH_FORM_FAILURE]: failure
 })

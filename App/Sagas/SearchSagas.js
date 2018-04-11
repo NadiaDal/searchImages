@@ -16,11 +16,13 @@ export function * getSearch (api, {searchQuery}) {
   const response = yield call(api.searchImages, query)
   if (response.ok) {
     const photos = response.data.photos.photo.filter(item => item.url_s).map(item => item.url_s)
-    yield put(SearchActions.searchFormSuccess(photos, query))
     const nav = yield select(getNav)
     const currentRoute = nav.routes[nav.routes.length - 1]
     if (currentRoute.routeName !== 'ResultScreen') {
+      yield put(SearchActions.searchFormSuccess(photos, query))
       yield put(NavigationActions.navigate({routeName: 'ResultScreen'}))
+    } else {
+      yield put(SearchActions.searchFormSuccessAppend(photos))
     }
   } else {
     yield put(SearchActions.searchFormFailure())
