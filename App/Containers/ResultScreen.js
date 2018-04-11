@@ -4,11 +4,17 @@ import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import SearchActions from '../Redux/SearchFormRedux'
 import Icon from 'react-native-vector-icons/Entypo'
+import ImagePreview from 'react-native-image-preview';
 
 import styles from './Styles/ResultScrenStyle'
 import { Metrics, Colors } from '../Themes/'
 
 class ResultScreen extends Component {
+  state = {
+    visible: false,
+    source: ''
+  }
+
   loadNext = () => {
     const {searchQuery} = this.props
     const nextPage = {...searchQuery, page: searchQuery.page + 1}
@@ -23,17 +29,21 @@ class ResultScreen extends Component {
       height: Metrics.screenWidth / columns
     }
     return (
-      <View
-        style={style}>
-        <Image
-          style={{
-            width: Metrics.screenWidth / columns - 6,
-            height: Metrics.screenWidth / columns - 6,
-            margin: 3
-          }}
-          source={{uri: item}}
-        />
-      </View>
+      <TouchableOpacity
+        onPress={() => this.setState({visible: true, source: item})}
+      >
+        <View
+          style={style}>
+          <Image
+            style={{
+              width: Metrics.screenWidth / columns - 6,
+              height: Metrics.screenWidth / columns - 6,
+              margin: 3
+            }}
+            source={{uri: item}}
+          />
+        </View>
+      </TouchableOpacity>
     )
   }
 
@@ -72,10 +82,16 @@ class ResultScreen extends Component {
 
   render () {
     const { photos } = this.props
+    const { visible, source } = this.state
     return (
       <View style={styles.container}>
         {this.renderBackButton()}
         {photos.length ? this.renderImages() : this.renderNoSearch()}
+        <ImagePreview
+          visible={visible}
+          source={{uri: source}}
+          close={() => this.setState({visible: false})}
+        />
       </View>
     )
   }

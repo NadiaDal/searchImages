@@ -7882,9 +7882,29 @@ react-native-i18n@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-i18n/-/react-native-i18n-1.0.0.tgz#0c407d9ebb846aae1aa5e05de6503008553f02fd"
 
+react-native-image-preview@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-preview/-/react-native-image-preview-0.3.1.tgz#e949369bb84acab692207538f72c15ce736fa53d"
+  dependencies:
+    prop-types "^15.6.0"
+    react-native-image-progress "1.0.1"
+    react-native-progress "3.4.0"
+
+react-native-image-progress@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-progress/-/react-native-image-progress-1.0.1.tgz#5ceb4cfefd39d7ebdffab802bc984b5a0fc41021"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-iphone-x-helper@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.2.tgz#7dbca530930f7c1ce8633cc8fd13ba94102992e1"
+
+react-native-progress@3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-3.4.0.tgz#c002e6efb2f0b82dd6889510e669c492da2718ac"
+  dependencies:
+    prop-types "^15.5.8"
 
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"
