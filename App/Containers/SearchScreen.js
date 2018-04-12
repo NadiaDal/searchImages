@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { TouchableOpacity, Text, TextInput, View, ActivityIndicator, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import SearchActions from '../Redux/SearchFormRedux'
-// import {throttle} from '../Utils/index'
+import {throttle, buildSearchQuery} from '../Utils'
 import MultiSlider from '../Components/react-native-multi-slider/MultiSlider'
 
 // Styles
@@ -19,41 +19,13 @@ class Search extends Component {
     }
   }
 
-  getExtras = (width) => {
-    let extras = 'url_s'
-    if (width <= 75) {
-      extras = 'url_sq'
-    } else if (width <= 100) {
-      extras = 'url_t'
-    } else if (width <= 150) {
-      extras = 'url_q'
-    } else if (width <= 240) {
-      extras = 'url_s'
-    } else if (width <= 320) {
-      extras = 'url_n'
-    } else if (width <= 500) {
-      extras = 'url_m'
-    } else {
-      extras = 'url_o'
-    }
-    return extras
-  }
-
   handleSearch = () => {
-    if (this.state.text.length === 0) {
+    const {text, columns} = this.state
+    if (text.length === 0) {
       this.setState({validationMessage: true})
       return
     }
-    const {text, columns} = this.state
-    const {screenHeight, screenWidth} = Metrics
-    const perPage = parseInt((screenHeight / (screenWidth / columns) * columns * 2), 10)
-    const extras = this.getExtras(parseInt((screenWidth / columns), 10))
-    const searchQuery = {
-      extras,
-      text,
-      columns: columns[0],
-      per_page: perPage
-    }
+    const searchQuery = buildSearchQuery(text, columns)
     Keyboard.dismiss()
     this.setSearchInput('')
     this.props.search(searchQuery)
@@ -136,7 +108,7 @@ class Search extends Component {
       <View>
         <TouchableOpacity
           style={styles.searchButton}
-          onPress={this.handleSearch}
+          onPress={throttle(this.handleSearch)}
         >
           <Text style={{color: 'white'}}>
             Search
