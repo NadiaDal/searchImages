@@ -27,7 +27,9 @@ export const getExtras = (columns) => {
   return extras
 }
 
-export const getPerPage = (columns) => parseInt((screenHeight / (screenWidth / columns) * columns * 2), 10)
+export const getPerPage = (columns) => {
+  return parseInt((screenHeight / (screenWidth / columns) * columns * 2), 10)
+}
 
 export const buildSearchQuery = (text, columns) => {
   const perPage = getPerPage(columns)
