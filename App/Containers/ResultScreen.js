@@ -4,7 +4,7 @@ import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import SearchActions from '../Redux/SearchFormRedux'
 import Icon from 'react-native-vector-icons/Entypo'
-import ImagePreview from 'react-native-image-preview';
+import ImagePreview from 'react-native-image-preview'
 
 import styles from './Styles/ResultScrenStyle'
 import { Metrics, Colors } from '../Themes/'
